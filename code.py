@@ -1,27 +1,19 @@
 #!/usr/bin/env python
 # ^-^ coding: utf-8 ^-^
+"""
+The main entrance of Plod.py, mapping urls to different Controlor
+@version: $Id$
+@author: Libitum<libitum@msn.com>
+"""
 import web
 import admin
+import blog
 
 ### Url mappings
 urls = (
-    "/blog/(.+)\.html", "blog",
-    "/cat/(.+)", "cat",
-    "/tag/(.+)", "tag",
     "/admin", admin.admin,
-    "/(.*)", "index"
+    "", blog.blog
 )
-
-### Templates
-t_globals = {
-    'date' : web.datestr
-        }
-render = web.template.render('themes/default/', globals=t_globals)
-
-class index:
-    def GET(self, path):
-        name = path
-        return render.index(name)
 
 ### main&run
 app = web.application(urls, locals())

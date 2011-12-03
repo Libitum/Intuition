@@ -1,17 +1,11 @@
-#!/usr/bin/env python
 # ^-^ coding: utf-8 ^-^
 import web
 urls = (
-    "", "reload",
-    "/(.*)", "index"
+    "/(.*)", "Index"
 )
 
-class reload:
-    def GET(self):
-        web.seeother('/')
-
-class index:
+class Index:
     def GET(self, path):
-        return "hello " + path
+        return "hello " + path + " in admin"
 
 admin = web.application(urls, locals())
