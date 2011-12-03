@@ -1,0 +1,14 @@
+$def with (name)
+<html>
+    <span>
+        hello <em>
+            $if name:
+                $name
+            $else:
+                world
+            !</em>
+    </span>
+    <div>
+        Now is $date
+    </div>
+</html>
