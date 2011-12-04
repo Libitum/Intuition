@@ -1,9 +1,8 @@
 """ --- Config of Plod.py --- """
-db_type = "mysql"
-db_host = "localhost"
-db_port = "3306"
-db_user = "libitum"
-db_password = "libitum"
-db_database = ""
+DB_TYPE = "MYSQL"
+DB_HOST = "LOCALHOST"
+DB_USER = "LIBITUM"
+DB_PASSWORD = "LIBITUM"
+DB_DATABASE = ""
 
-cache = False
+CACHE = FALSE
