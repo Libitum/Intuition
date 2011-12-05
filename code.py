@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # ^-^ coding: utf-8 ^-^
 """
-The main entrance of Plod.py, mapping urls to different Controlor
+The main entrance of Intuition, mapping urls to different Controlor
 @version: $Id$
 @author: Libitum<libitum@msn.com>
 """

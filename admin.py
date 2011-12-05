@@ -1,52 +1,97 @@
 # ^-^ coding: utf-8 ^-^
 """
-Admin operation of Plod.py. handle all admin operation
+Admin operation of Intuition handle all admin operation
 @version: $Id$
 @author: Libitum<libitum@msn.com>
 """
 import urllib
 import xml.dom.minidom
 import web
+import config
 
 ### Url mappings
 urls = (
     "/login", "Login",
-    "/(.*)", "Index"
+    ".*", "Index"
 )
+### App initialization
+admin = web.application(urls, locals())
 
+### Session initialization
+'''
+if web.config.get('_session') is None:
+    session = web.session.Session(admin, web.session.DiskStore('sessions'))
+    web.config._session = session
+else:
+    session = web.config._session
+'''
+ccc = "Libitum"
+### Templates initialization
+t_globals = {
+    'datestr' : web.datestr,
+    'title' : ccc
+}
+render = web.template.render('themes/admin', base="base", globals=t_globals)
+
+### Main handler
 class Index:
-    def GET(self, path):
-        return "hello " + path + " in admin"
+    def GET(self):
+        ccc = "Tisa"
+        return render.posts("world")
 
 class Login:
     def GET(self):
-        if web.input().has_key("openid.mode"):
-            data = web.input()
+        data = web.input()
+        if data.has_key("openid.mode"):
             if data.get("openid.mode") == "cancel":
                 return "No Access from google!"
             elif data.get("openid.mode") == "id_res":
-                #TODO login success
-                return "Login success"
+                params = {
+                        "openid.signed" : data.get("openid.signed"),
+                        "openid.sig" : data.get("openid.sig"),
+                        "openid.mode" : "check_authentication"
+                        }
+                for key in data.get("openid.signed").split(","):
+                    params["openid."+key] = data.get("openid."+key)
+                params["openid.ext1.value.firstname"] = data.get("openid.ext1.value.firstname").encode("utf-8")
+
+                URI = self.__discover(data.get("openid.identity"))
+                valid = urllib.urlopen(URI, data=urllib.urlencode(params)).read()
+                if(valid == "is_valid:true"):
+                    if data.get("openid.ext1.value.email") == config.ADMIN:
+                        return "Login Successfully!"
+                    else:
+                        return "Not this user! Please check the ADMIN in config.py"
+                else:
+                    return "Invalided Authentication!" + valid
             else:
                 return "Unknown error"
         else:
             #signin with google through openID
-            re = urllib.urlopen('https://www.google.com/accounts/o8/id')
-            dom = xml.dom.minidom.parseString(re.read())
-            URI = dom.getElementsByTagName('URI')[0].firstChild.data
+            URI = self.__discover('https://www.google.com/accounts/o8/id')
             
             data = {
                     "openid.mode" : "checkid_setup",
                     "openid.ns" : "http://specs.openid.net/auth/2.0",
-                    "openid.return_to" : web.ctx.home,
+                    "openid.return_to" : web.ctx.home + web.ctx.path,
                     "openid.claimed_id" : "http://specs.openid.net/auth/2.0/identifier_select",
                     "openid.identity" : "http://specs.openid.net/auth/2.0/identifier_select",
+                    "openid.ns.pape" : "http://specs.openid.net/extensions/pape/1.0",
+                    "openid.pape.max_auth_age" : "3600",
                     "openid.ns.ui" : "http://specs.openid.net/extensions/ui/1.0",
                     "openid.ns.ax" : "http://openid.net/srv/ax/1.0",
                     "openid.ax.mode" : "fetch_request",
-                    "openid.ax.required" : "email",
-                    "openid.ax.type.email" : "http://schema.openid.net/contact/email"
+                    "openid.ax.required" : "email,firstname",
+                    "openid.ax.type.email" : "http://schema.openid.net/contact/email",
+                    "openid.ax.type.firstname" : "http://axschema.org/namePerson/first"
                 }
             raise web.seeother(URI + "?" + urllib.urlencode(data))
+    #end of GET
 
-admin = web.application(urls, locals())
+    def __discover(self, url):
+        """ Discover authentication URI """
+        re = urllib.urlopen(url)
+        dom = xml.dom.minidom.parseString(re.read())
+        URI = dom.getElementsByTagName('URI')[0].firstChild.data
+        return URI
+#end of class Login
