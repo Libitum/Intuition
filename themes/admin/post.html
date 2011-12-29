@@ -1,0 +1,98 @@
+<!-- Wrapper -->
+<div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">					
+
+    <h3>Write Post</h3>
+
+    <form id="form" method="post" action="#">
+
+        <fieldset>
+            <legend>Post Content</legend>
+            <p>
+            <label class="required" for="posttitle">Title</label><br/>
+            <input type="text" id="posttitle" class="half title" value="" name="posttitle"/>
+            <small>Title of the post.</small>
+            </p>
+
+            <p>
+            <textarea id="content" class="large full" name="content"></textarea>
+            </p>
+
+            <p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="#">Cancel</a></p>
+        </fieldset>
+    </form>
+
+    </section>
+    <!-- End of Left column/section -->
+
+    <!-- Right column/section -->
+    <aside class="column width2">
+    <p><a href="#" class="btn btn-special btn-green"><img SRC="/static/admin/img/page_white_go.png" class="icon" alt=""/>Preview</a></p>
+    <p><a href="#" class="btn btn-special btn-blue"><img SRC="/static/admin/img/page_save.png" class="icon" alt=""/>Save</a></p>
+    <div class="content-box">
+        <header>
+        <h3>Status</h3>
+        </header>
+        <section>
+        Publish or as Draft.
+        <select id="visibility" class="full" name="visibility">
+            <option value="1" selected>Publish</option>
+            <option value="0">Draft</option>
+        </select>
+        </section>
+    </div>
+    <div class="content-box">
+        <header>
+        <h3>Select Date</h3>
+        </header>
+        <section>
+        <input type="text" style="width:34px" maxlength="4">
+        <input type="text" style="width:16px" maxlength="2">
+        <input type="text" style="width:16px" maxlength="2"> @ 
+        <input type="text" style="width:16px" maxlength="2"> : 
+        <input type="text" style="width:16px" maxlength="2">
+        </section>
+    </div>
+    <div class="content-box">
+        <header>
+        <h3>Category</h3>
+        </header>
+        <section>
+        <dl>
+            <dd><input type="radio" name="cat"/><label class="choice">Test</label></dd>
+            <dd><input type="radio" name="cat"/><label class="choice">another</label></dd>
+        </dl>
+        </section>
+    </div>
+    <div class="content-box">
+        <header>
+        <h3>Tags</h3>
+        </header>
+        <section>
+        Enter tags separated by space.
+        <p><textarea id="tags" class="small full" name="tags"></textarea></p>
+        <p>All Tags</p>
+        </section>
+    </div>
+    </aside>
+    <!-- End of Right column/section -->
+
+    <!-- private javascript -->
+    <script charset="utf-8" src="/static/admin/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="/static/admin/kindeditor/lang/en.js"></script>
+    <script>
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('textarea[name="content"]', {
+                resizeType : 1,
+                langType : "en",
+                items : ['source', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyfull', 'insertorderedlist',
+                        'insertunorderedlist', '|', 'hr', 'emoticons', 'image', 'link', 'unlink', 'code']
+            });
+        });
+    </script>
+
+</div>
+<!-- End of Wrapper -->
