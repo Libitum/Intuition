@@ -8,10 +8,16 @@ import urllib
 import xml.dom.minidom
 import web
 import config
+import model2
 
 ### Url mappings
 urls = (
     "/login", "Login",
+    "/logout", "Logout",
+    "/posts/?(.*)", "Post",
+    "/pages/?(.*)", "Page",
+    "/links", "Link",
+    "/setup", "Setup",
     ".*", "Index"
 )
 ### App initialization
@@ -25,19 +31,16 @@ if web.config.get('_session') is None:
 else:
     session = web.config._session
 '''
-ccc = "Libitum"
 ### Templates initialization
 t_globals = {
     'datestr' : web.datestr,
-    'title' : ccc
 }
 render = web.template.render('themes/admin', base="base", globals=t_globals)
 
 ### Main handler
 class Index:
     def GET(self):
-        ccc = "Tisa"
-        return render.posts("world")
+        return render.index()
 
 class Login:
     def GET(self):
@@ -95,3 +98,28 @@ class Login:
         URI = dom.getElementsByTagName('URI')[0].firstChild.data
         return URI
 #end of class Login
+
+class Logout:
+    '''clear session and return to index of blog'''
+    def GET(self):
+        pass
+
+class Post:
+    '''manage posts'''
+    def GET(self, _id):
+        return render.post()
+
+class Page:
+    '''manage pages'''
+    def GET(self, _id):
+        return render.post()
+
+class Link:
+    '''manage links'''
+    def GET(self):
+        return render.links()
+
+class Setup:
+    '''configuration of blog'''
+    def GET(self):
+        return render.setup()

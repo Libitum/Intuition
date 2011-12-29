@@ -2,14 +2,15 @@
 import web
 
 #Configuration for Blog User, just google account
-ADMIN = "libitum.zju@gmail.com"
+ACCOUNT = "libitum.zju@gmail.com"
 
 #Configuration for database
-DB_TYPE = "MYSQL"
-DB_HOST = "LOCALHOST"
-DB_USER = "LIBITUM"
-DB_PASSWORD = "LIBITUM"
-DB_DATABASE = ""
+DB_TYPE = "mysql"
+DB_HOST = "r3139libitum.mysql.aliyun.com"
+DB_PORT = 3306
+DB_USER = "r8338libitum"
+DB_PASSWORD = "ra633728b"
+DB_DATABASE = "r8338libitum"
 
 CACHE = False
 
