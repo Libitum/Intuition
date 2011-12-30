@@ -1,3 +1,5 @@
+$def with(posts)
+$var pagetitle : Posts
 <!-- Wrapper -->
 <div class="wrapper">
     <!-- Left column/section -->
@@ -7,28 +9,32 @@
     <table id="report" class="stylized full">
         <thead>
             <tr>
-                <th><input type="checkbox"/></th>
                 <th>Title</th>
                 <th>Categories</th>
-                <th>Tags</th>
                 <th>Comments</th>
                 <th>Date</th>
                 <th>Views</th>
                 <th>Published</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
+        $for p in posts:
             <tr>
-                <td><input type="checkbox"/></td>
                 <td class="title">
-                    <a href="#"><b>Hello World</b></a>
+                    <a href="/admin/posts/$p.id"><b>$p.post_title</b></a>
                 </td>
-                <td>Test</td>
-                <td>test</td>
-                <td>2</td>
-                <td>2011</td>
-                <td>30</td>
-                <td>Published</td>
+                <td>$p.name</td>
+                <td>$p.comment_count</td>
+                <td>$p.post_date</td>
+                <td>$p.post_views</td>
+                <td>
+                    $if p.post_status == 0:
+                        Draft
+                    $else:
+                        Published
+                </td>
+                <td><img src="/static/admin/img/delete.png"/></td>
             </tr>
         </tbody>
     </table>
@@ -46,7 +52,7 @@
         </header>
         <dl class="first">
             <dt><img width="16" height="16" src="/static/admin/img/information.png" /></dt>
-            <dd><a HREF="styles.html">New Post</a></dd>
+            <dd><a HREF="/admin/posts/new">New Post</a></dd>
             <dd class="last">Write a now post</dd>							
         </dl>
     </div>

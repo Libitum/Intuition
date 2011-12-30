@@ -1,27 +1,33 @@
+$def with (post, cats, post_tags)
+$var pagetitle : Posts
 <!-- Wrapper -->
 <div class="wrapper">
     <!-- Left column/section -->
+    <form id="form" method="post" action="">
     <section class="column width6 first">					
 
     <h3>Write Post</h3>
 
-    <form id="form" method="post" action="#">
-
         <fieldset>
             <legend>Post Content</legend>
             <p>
-            <label class="required" for="posttitle">Title</label><br/>
-            <input type="text" id="posttitle" class="half title" value="" name="posttitle"/>
+            <label class="required" for="post_title">Title</label><br/>
+            <input type="text" id="post_title" class="half title" value="$post['post_title']" name="post_title"/>
             <small>Title of the post.</small>
             </p>
 
             <p>
-            <textarea id="content" class="large full" name="content"></textarea>
+            <textarea id="post_content" class="large full" name="post_content">$post['post_content']</textarea>
             </p>
 
-            <p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="#">Cancel</a></p>
+            <p>
+            <label for="post_slug">Slug</label><br/>
+            <input type="text" id="post_slug" class="half title" value="$post['post_slug']" name="post_slug"/>
+            <small>uri of the post.</small>
+            </p>
+
+            <p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="/admin/posts">Cancel</a></p>
         </fieldset>
-    </form>
 
     </section>
     <!-- End of Left column/section -->
@@ -36,9 +42,15 @@
         </header>
         <section>
         Publish or as Draft.
-        <select id="visibility" class="full" name="visibility">
-            <option value="1" selected>Publish</option>
-            <option value="0">Draft</option>
+        <select id="post_status" class="full" name="post_status">
+            <option value="1" 
+            $if post['post_status'] == 1:
+                selected
+            >Publish</option>
+            <option value="0"
+            $if post['post_status'] == 0:
+                selected
+            >Draft</option>
         </select>
         </section>
     </div>
@@ -60,8 +72,11 @@
         </header>
         <section>
         <dl>
-            <dd><input type="radio" name="cat"/><label class="choice">Test</label></dd>
-            <dd><input type="radio" name="cat"/><label class="choice">another</label></dd>
+        $for cat in cats:
+            <dd><input type="radio" name="cat_id" value="$cat.term_id"
+            $if post['cat_id'] == cat.term_id:
+                checked=true
+            /><label class="choice">$cat.name</label></dd>
         </dl>
         </section>
     </div>
@@ -71,12 +86,17 @@
         </header>
         <section>
         Enter tags separated by space.
-        <p><textarea id="tags" class="small full" name="tags"></textarea></p>
+        <textarea id="tags" class="small full" name="tags">
+$for tag in post_tags:
+    $tag.name,\
+</textarea>
         <p>All Tags</p>
         </section>
     </div>
     </aside>
     <!-- End of Right column/section -->
+
+    </form>
 
     <!-- private javascript -->
     <script charset="utf-8" src="/static/admin/kindeditor/kindeditor-min.js"></script>
@@ -84,7 +104,7 @@
     <script>
         var editor;
         KindEditor.ready(function(K) {
-            editor = K.create('textarea[name="content"]', {
+            editor = K.create('textarea[name="post_content"]', {
                 resizeType : 1,
                 langType : "en",
                 items : ['source', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
@@ -93,6 +113,5 @@
             });
         });
     </script>
-
 </div>
 <!-- End of Wrapper -->
