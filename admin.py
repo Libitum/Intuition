@@ -107,7 +107,64 @@ class Logout:
 class Post:
     '''manage posts'''
     def GET(self, _id):
-        return render.post()
+        db_post = model2.Posts('post')
+        db_term = model2.Terms()
+        if _id == "":
+            #posts list
+            page = web.input(page='1').page
+            if page.isdigit():
+                page = int(page)-1
+            else:
+                raise web.notfound()
+
+            posts = db_post.gets(limit=20, offset=page*20)
+            return render.posts(posts)
+
+        elif _id.isdigit():
+            #Edit Post
+            post = db_post.get(_id)[0]
+            cats = db_term.gets(0)
+            post_tags = db_term.getTags(post.id)
+            return render.post(post, cats, post_tags)
+
+        elif _id == "new":
+            #new Post
+            post = {
+                    'id' : 0,
+                    'cat_id' : 0,
+                    'post_title' : '',
+                    'post_content' : '',
+                    'post_slug' : '',
+                    'post_status' : 0,
+                    }
+            cats = db_term.gets(0)
+            post_tags = ''
+            return render.post(post, cats, post_tags)
+
+        else:
+            #error
+            raise web.notfound()
+
+    def POST(self, _id):
+        db_post = model2.Posts('post')
+        if _id.isdigit():
+            #update Post
+            data = web.input()
+            if 1 == db_post.update(_id, data):
+                raise web.seeother('/posts')
+            else:
+                print "error"
+
+        elif _id == "new":
+            #write post
+            data = web.input()
+            if 0 != db_post.insert(data, 'post'):
+                raise web.seeother('/posts')
+            else:
+                print "asd"
+
+        else:
+            raise web.notfount()
 
 class Page:
     '''manage pages'''
