@@ -16,6 +16,7 @@ urls = (
     "/logout", "Logout",
     "/posts/?(.*)", "Post",
     "/pages/?(.*)", "Page",
+    "/comments", "Comment",
     "/links", "Link",
     "/setup", "Setup",
     ".*", "Index"
@@ -170,6 +171,13 @@ class Page:
     '''manage pages'''
     def GET(self, _id):
         return render.post()
+
+class Comment:
+    '''manage comments'''
+    def GET(self):
+        db_comment =  model2.Comments()
+        comments = db_comment.gets()
+        return render.comments(comments)
 
 class Link:
     '''manage links'''

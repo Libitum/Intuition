@@ -51,3 +51,12 @@ class Terms:
         query = "SELECT name FROM in_terms, in_term_post WHERE in_term_post.post_id = $id \
                 AND in_term_post.term_id = in_terms.term_id;"
         return db.query(query, {'id' : id})
+
+class Comments:
+    def gets(self, limit=10, offset = 0):
+        query = "SELECT comment_author, comment_author_email, comment_author_url, \
+                comment_author_IP, comment_date, comment_content, post_title \
+                FROM in_comments \
+                LEFT JOIN in_posts ON comment_post_id=id ;"
+        return db.query(query)
+

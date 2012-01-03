@@ -317,6 +317,7 @@ table.stylized {
 	position:relative;
 	margin-top:1em;
 	margin-bottom:1em;
+    table-layout:fixed;
 }
 table.stylized th,table.stylized td {
 	line-height:18px;
@@ -347,6 +348,10 @@ table.stylized caption {
 	text-align:left;
 	font-size:11px;
 	text-transform:uppercase;
+}
+td.wrap{
+    word-break:break-all;
+    word-wrap:break-work;
 }
 table.no-style th,table.no-style td {
 	line-height:18px;
