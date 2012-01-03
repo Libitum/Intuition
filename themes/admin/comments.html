@@ -1,0 +1,71 @@
+$def with(comments)
+$var pagetitle : Comments
+<!-- Wrapper -->
+<div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">					
+    <div class="box box-info">Info....</div>
+
+    <table id="report" class="stylized">
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Email</th>
+                <th>Comment</th>
+                <th>Date</th>
+                <th>For</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        $for c in comments:
+            <tr>
+                <td width="105px">
+                    <img src="http://www.gravatar.com/avatar/16e387104ef7adc2df970e06b90129aa?s=32" style="float:left"/>
+                    $if c.comment_author_url == "":
+                        <b>$c.comment_author</b>
+                    $else:
+                        <a href="/admin/posts/p.id"><b>$c.comment_author</b></a>
+                    <br />11.100.10.21
+                </td>
+                <td><a href="mailto:$c.comment_author_email">$c.comment_author_email</a></td>
+                <td class="wrap">$c.comment_content</td>
+                <td>$c.comment_date</td>
+                <td width="100px">$c.post_title</td>
+                <td><img src="/static/admin/img/delete.png"/></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="clear">&nbsp;</div>
+
+    </section>
+    <!-- End of Left column/section -->
+
+    <!-- Right column/section -->
+    <aside class="column width2">
+    <div id="rightmenu">
+        <header>
+        <h3>Quick Operation</h3>
+        </header>
+        <dl class="first">
+            <dt><img width="16" height="16" src="/static/admin/img/information.png" /></dt>
+            <dd><a HREF="/admin/posts/new">New Post</a></dd>
+            <dd class="last">Write a now post</dd>							
+        </dl>
+    </div>
+    <div class="content-box">
+        <header>
+        <h3>Tables</h3>
+        </header>
+        <section>
+        Try other alternatives:<br/>
+        <dl>
+            <dt></dt>
+            <dd><a HREF="http://www.865171.cn">www.865171.cn</a></dd>
+        </dl>
+        </section>
+    </div>
+    </aside>
+    <!-- End of Right column/section -->
+</div>
