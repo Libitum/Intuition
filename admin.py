@@ -6,9 +6,13 @@ Admin operation of Intuition handle all admin operation
 """
 import urllib
 import xml.dom.minidom
+import json
+
 import web
+
 import config
 import model2
+import tools
 
 ### Url mappings
 urls = (
@@ -16,6 +20,7 @@ urls = (
     "/logout", "Logout",
     "/posts/?(.*)", "Post",
     "/pages/?(.*)", "Page",
+    "/terms/(category|tag)", "Term",
     "/comments", "Comment",
     "/links", "Link",
     "/setup", "Setup",
@@ -34,7 +39,7 @@ else:
 '''
 ### Templates initialization
 t_globals = {
-    'datestr' : web.datestr,
+    'time2str' : tools.time2str,
 }
 render = web.template.render('themes/admin', base="base", globals=t_globals)
 
@@ -126,7 +131,8 @@ class Post:
             post = db_post.get(_id)[0]
             cats = db_term.gets(0)
             post_tags = db_term.getTags(post.id)
-            return render.post(post, cats, post_tags)
+            suggest_tags = db_term.getSuggestTags()
+            return render.post(post, cats, post_tags, suggest_tags)
 
         elif _id == "new":
             #new Post
@@ -135,12 +141,25 @@ class Post:
                     'cat_id' : 0,
                     'post_title' : '',
                     'post_content' : '',
+                    'post_date' : tools.getTime(),
+                    'cat_id' : 1,
                     'post_slug' : '',
                     'post_status' : 0,
                     }
             cats = db_term.gets(0)
             post_tags = ''
-            return render.post(post, cats, post_tags)
+            suggest_tags = db_term.getSuggestTags()
+            return render.post(post, cats, post_tags, suggest_tags)
+
+        elif _id == "tags.json":
+            #tags in json
+            #tags = [{'tag' : 'tisa', 'freq':30}, {'tag':'libitum', 'freq':30}]
+            tags = []
+            tags_res = db_term.getAllTags()
+            for tag_res in tags_res:
+                tag = {'tag' : tag_res['name'], 'freq' : tag_res['num']}
+                tags.append(tag)
+            return json.dumps(tags)
 
         else:
             #error
@@ -159,18 +178,26 @@ class Post:
         elif _id == "new":
             #write post
             data = web.input()
-            if 0 != db_post.insert(data, 'post'):
+            if db_post.insert(data, 'post'):
                 raise web.seeother('/posts')
             else:
-                print "asd"
+                return "asd"
 
         else:
             raise web.notfount()
+#end of class Post
 
 class Page:
     '''manage pages'''
     def GET(self, _id):
         return render.post()
+
+class Term:
+    '''manage categories and tags'''
+    def GET(self, _type):
+        db_term = model2.Terms()
+        terms = db_term.gets()
+        return render.terms(terms)
 
 class Comment:
     '''manage comments'''

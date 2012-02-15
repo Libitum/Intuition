@@ -1,0 +1,88 @@
+/*  
+Theme Name: imbalance
+Theme URI: 
+Description: 一个比较科技风的主题，由 Tisa 设计，Libitum 制作完成。请注意：本主题使用了一些html5和css3的特性，ie8以下版本并不支持。
+Version: 0.1
+Author: <a href='http://www.tisafu.com'>Tisa</a> & <a href='http://www.libitum.org'>Libitum</a>
+Author URI: http://www.tisafu.com
+Tags: two-columns
+ */
+body{margin:0px; padding:0px; text-align:center; font-family:"Microsoft YaHei","Times New Roman",Georgia,Serif; font-size:14px; color:#E2E0E1; background-color:black}
+body #page{margin:0px auto; text-align:left; width:960px}
+body #wrapper{height:210px; position:relative; margin-bottom:-60px; background:-moz-linear-gradient(left,black,#385982 50%,black 95%); background:-webkit-gradient(linear,0% 0%,100% 0%,from(black),to(black),color-stop(0.5,#385982))}
+body #wrapper #header h1{position:absolute; left:40px; top:0px; font-size:36px; color:white; width:300px}
+body #wrapper #header h3{position:absolute; left:130px; top:50px; font-size:20px; color:white; width:300px}
+#wrapper #nav{position:absolute; top:100px; right:40px}
+.link_item, .cat-item, .page_item{float:left; text-align:center; width:80px; height:25px; margin-right:7px; background-color:#3D5A7C; border:2px solid #3F5C7E; font-size:16px; -moz-border-radius:10px; -webkit-border-radius:10px; text-shadow:rgba(10,10,10,0.5) 2px 2px 2px}
+li.link_item{background-color:#C2C2C2; border:0px; padding:2px; background:-moz-linear-gradient(top,#EBEBEB,#919191 95%); background:-webkit-gradient(linear,0% 0%,0% 95%,from(#EBEBEB),to(#919191)); -moz-box-shadow:0px 2px 15px #111; -webkit-box-shadow:0px 2px 15px #111}
+li.link_item a{color:#585858}
+body #main{width:960px; padding-top:20px; float:left; z-index:1; position:relative}
+body #content{float:left; width:560px; padding:0px 30px 50px 40px; background:url("images/bg-gray.png"); -moz-border-radius:20px; -webkit-border-radius:20px; -moz-box-shadow:10px -10px 20px #000; -webkit-box-shadow:10px -10px 20px #000}
+#hole_bg{width:60px; background:url("images/bg-hole.png"); border:7px solid #313131; float:left; margin-top:20px; margin-left:-10px; height:2000px; -moz-border-radius:20px; -webkit-border-radius:20px; z-index:-1; position:relative}
+body #sidebar{float:right; width:260px; margin-top:20px; -moz-border-radius:20px; -webkit-border-radius:20px; -moz-box-shadow:-10px -10px 20px #000; -webkit-box-shadow:-10px -10px 20px #000}
+.sidebar_ul{padding:0}
+#footer{width:880px; text-shadow:rgba(200,200,200,.8) 1px 1px 0; float:left; margin:50px 0; padding:20px 40px; background-color:#313131; -moz-border-radius:20px; -webkit-border-radius:20px}
+
+body #content h2{font-size:20px; width:500px; font-weight:normal}
+.split_line{background:url("images/split_line.png") no-repeat; height:3px; margin:10px 0 10px 0}
+.comments{position:absolute; right:0px; top:0px; height:34px; width:37px; padding-top:1px; text-align:center; background:url("images/comments_bg.png") no-repeat; font-family:"Candara",serif}
+.dates{width:75px; height:65px; position:absolute; text-align:center; background:url("images/dates_bg.png"); left:-75px; top:-10px}
+.dates span{font-size:30px}
+p{line-height:24px}
+.detail{overflow:hidden}
+ol, ul, li, dl, dt, dd{list-style:none outside none}
+img{max-width:560px}
+
+/*--------------------for links--------------------*/
+a{text-decoration:none; color:#E2E0E1}
+a:link:hover, a:visited:hover{text-decoration:underline}
+.comments a{color:#969696; font-weight:bold; font-size:16px}
+#footer a{color:#2979D8; font-weight:bold}
+
+.more-link{padding:5px 10px 5px 10px; background-color:gray; -moz-border-radius:5px; -webkit-border-radius:5px}
+/*--------------------search--------------------*/
+#searchform{}
+input#s{}
+
+input#searchsubmit{}
+
+/*--------------------comments--------------------*/
+.comment-body{margin-bottom:10px; padding-bottom:10px; border-bottom:1px dotted #E9EEF2}
+.parent{margin-bottom:50px}
+.says{display:none}
+.comment-author{float:left; width:60px}
+img.avatar{border:1px solid #CFD9E1; padding:1px}
+#commentform p{margin:0 0 10px 0}
+.commentmetadata{}
+#commentform input{padding-left:26px; height:20px; border:1px dotted white; width:80%; color:#E2E0E1; font-size:12px; -moz-border-radius:5px; -webkit-border-radius:5px}
+#commentform textarea{width:100%; height:100%; background:transparent; border:1px dotted white; padding-bottom:7px; color:#E2E0E1; font-size:12px; -moz-border-radius:5px; -webkit-border-radius:5px}
+#commentform #submit{width:130px; text-align:center; color:gray; padding:0}
+#respond{margin-bottom:20px}
+#author{background:url("images/respond_1.gif") no-repeat scroll 5px 7px transparent}
+#email{background:url("images/respond_2.gif") no-repeat scroll 5px 7px transparent}
+#url{background:url("images/respond_3.gif") no-repeat scroll 5px 7px transparent}
+#respond_l{float:left; width:40%}
+#respond_r{float:left; width:60%; height:85px}
+#respond_btn{clear:both; text-align:right}
+/*--------------------calendar--------------------*/
+#wp-calendar{empty-cells:show}
+/*-------------------- widgets---------------------*/
+h3.widgettitle{background:url("images/bg-sidebar-top.gif") no-repeat; margin:0 0 0 -15px; padding-left:25px; height:40px; line-height:40px}
+.widget{background:url("images/bg-sidebar-bottom.gif") no-repeat 0 bottom; padding:0 0 40px 0; position:relative}
+.widget ul{padding:0 20px 0 30px; margin:0; line-height:26px; background:url("images/bg-sidebar.gif") repeat-y}
+.widget ul li{list-style:disc outside none}
+.widgettags{background:url("images/log_logo.gif") no-repeat; position:absolute; left:-55px; top:5px; width:33px; height:32px}
+
+li.widget_text{margin-top:-12px}
+li.widget_text h3, li.widget_text .widgettags{display:none}
+div.textwidget{background:url("images/intro.gif") no-repeat; height:310px; position:relative}
+div.textwidget p{padding:220px 0 0 50px}
+
+li.widget_recentcomments .widgettags{background:url("images/common_logo.gif") no-repeat}
+li.widget_recentcomments ul{line-height:22px; padding:0 20px}
+li.widget_recentcomments ul li{list-style:none outside none}
+
+.widget_links .widgettags{background:url("images/link_logo.gif") no-repeat}
+
+/*----post class---*/
+.post, .hentry{padding-bottom:30px; position:relative}

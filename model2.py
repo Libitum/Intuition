@@ -1,8 +1,10 @@
 # ^-^ coding: utf-8 ^-^
 import web
 import config
+import tools
 
-db = web.database(dbn=config.DB_TYPE, host=config.DB_HOST, port=config.DB_PORT, user=config.DB_USER, pw=config.DB_PASSWORD, db=config.DB_DATABASE)
+db = web.database(dbn=config.DB_TYPE, host=config.DB_HOST, port=config.DB_PORT, 
+        user=config.DB_USER, pw=config.DB_PASSWORD, db=config.DB_DATABASE)
 
 class Posts:
     __vars = {}
@@ -24,17 +26,31 @@ class Posts:
 
     def update(self, id, data):
         self.__vars['id'] = id
+        timestr = data['year'] + '-' + data['month'] + '-' + data['day'] + ' ' + data['hour'] + ':' + data['min']
+        post_date = tools.str2time(timestr)
         return db.update('in_posts', where="id=$id", vars=self.__vars, 
                 cat_id=data['cat_id'], post_title=data['post_title'],
                 post_content=data['post_content'], post_slug=data['post_slug'], 
-                post_status=data['post_status']
+                post_status=data['post_status'], post_date=post_date
                 )
 
     def insert(self, data, tp='post'):
-        return db.insert('in_posts', cat_id=data['cat_id'], post_title=data['post_title'],
+        timestr = data['year'] + '-' + data['month'] + '-' + data['day'] + ' ' + data['hour'] + ':' + data['min']
+        post_date = tools.str2time(timestr)
+        t = db.transaction()
+        try:
+            db.query("UPDATE in_terms SET num = num+1 WHERE term_id=" + data['cat_id'])
+            db.insert('in_posts', cat_id=data['cat_id'], post_title=data['post_title'],
                 post_content=data['post_content'], post_slug=data['post_slug'], 
-                post_status=data['post_status'], post_type=tp
+                post_status=data['post_status'], post_date=post_date, 
+                post_type=tp
                 )
+        except:
+            t.rollback()
+            return False
+        else:
+            t.commit()
+            return True
 
     def delete(self, id):
         self.__vars['id'] = id
@@ -51,6 +67,13 @@ class Terms:
         query = "SELECT name FROM in_terms, in_term_post WHERE in_term_post.post_id = $id \
                 AND in_term_post.term_id = in_terms.term_id;"
         return db.query(query, {'id' : id})
+
+    def getSuggestTags(self):
+        return db.select('in_terms', what="name", where="tag=1", order="num DESC")
+
+    def getAllTags(self):
+        query = "SELECT name, num FROM in_terms WHERE tag=1;"
+        return db.query(query)
 
 class Comments:
     def gets(self, limit=10, offset = 0):

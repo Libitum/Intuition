@@ -1,4 +1,4 @@
-$def with (post, cats, post_tags)
+$def with (post, cats, post_tags, suggest_tags)
 $var pagetitle : Posts
 <!-- Wrapper -->
 <div class="wrapper">
@@ -59,11 +59,21 @@ $var pagetitle : Posts
         <h3>Select Date</h3>
         </header>
         <section>
-        <input type="text" style="width:34px" maxlength="4">
-        <input type="text" style="width:16px" maxlength="2">
-        <input type="text" style="width:16px" maxlength="2"> @ 
-        <input type="text" style="width:16px" maxlength="2"> : 
-        <input type="text" style="width:16px" maxlength="2">
+        <input name="year" type="text" style="width:34px" maxlength="4" value=
+        $time2str(post['post_date'], "%Y")
+        >
+        <input name="month" type="text" style="width:16px" maxlength="2" value=
+        $time2str(post['post_date'], "%m")
+        >
+        <input name="day" type="text" style="width:16px" maxlength="2" value=
+        $time2str(post['post_date'], "%d")
+        > @ 
+        <input name="hour" type="text" style="width:16px" maxlength="2" value=
+        $time2str(post['post_date'], "%H")
+        > : 
+        <input name="min" type="text" style="width:16px" maxlength="2" value=
+        $time2str(post['post_date'], "%M")
+        >
         </section>
     </div>
     <div class="content-box">
@@ -88,7 +98,7 @@ $var pagetitle : Posts
         Enter tags separated by space.
         <textarea id="tags" class="small full" name="tags">
 $for tag in post_tags:
-    $tag.name,\
+    $tag.name, \
 </textarea>
         <p>All Tags</p>
         </section>
@@ -101,6 +111,7 @@ $for tag in post_tags:
     <!-- private javascript -->
     <script charset="utf-8" src="/static/admin/kindeditor/kindeditor-min.js"></script>
     <script charset="utf-8" src="/static/admin/kindeditor/lang/en.js"></script>
+    <script charset="utf-8" src="/static/admin/js/jquery.tagInput.min.js"></script>
     <script>
         var editor;
         KindEditor.ready(function(K) {
@@ -111,6 +122,22 @@ $for tag in post_tags:
                         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyfull', 'insertorderedlist',
                         'insertunorderedlist', '|', 'hr', 'emoticons', 'image', 'link', 'unlink', 'code']
             });
+        });
+
+        /* tags */
+        var tags=[{tag:"js",freq:30},{tag:"jquery",freq:25}, {tag:"pojo",freq:10},{tag:"agile",freq:4}];
+        $$('#tags').tagInput({
+            //tags:tags,
+            jsonUrl:"/admin/posts/tags.json",
+            sortBy:"frequency",
+            suggestedTags:[
+            $for tag in suggest_tags:
+                "$tag.name",
+            ],
+            tagSeparator:",",
+            autoFilter:true,
+            autoStart:false,
+            boldify:true
         });
     </script>
 </div>

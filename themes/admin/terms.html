@@ -1,0 +1,83 @@
+$def with(terms)
+$var pagetitle : Categories
+<!-- Wrapper -->
+<div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">					
+    <div class="box box-info">Info....</div>
+
+    <table id="report" class="stylized full">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Nums</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        $for t in terms:
+            <tr>
+                <td class="title">
+                    <a href="/admin/posts/$t.term_id"><b>$t.name</b></a>
+                </td>
+                <td>$t.slug</td>
+                <td>$t.num</td>
+                <td><img src="/static/admin/img/delete.png"/></td>
+                <td><img src="/static/admin/img/delete.png"/></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="clear">&nbsp;</div>
+
+    <div class="clearfix leading">
+        <div class="column width3 first">
+            <p>
+                <label for="name">Category name</label><br />
+                <input type="text" id="name" name="name" class="full"/>
+                <small>e.g. Default</small>
+            </p>
+        </div>
+        <div class="column width3">
+            <p>
+                <label for="name">Slug</label><br />
+                <input type="text" id="name" name="name" class="full"/>
+                <small>e.g. default</small>
+            </p>
+        </div>
+    <p><input type="submit" class="btn btn-green big" value="Save" /> or <a href="#">Cancel</a></p>
+    </div>
+
+
+    </section>
+    <!-- End of Left column/section -->
+
+    <!-- Right column/section -->
+    <aside class="column width2">
+    <div id="rightmenu">
+        <header>
+        <h3>Quick Operation</h3>
+        </header>
+        <dl class="first">
+            <dt><img width="16" height="16" src="/static/admin/img/information.png" /></dt>
+            <dd><a HREF="/admin/posts/new">New Post</a></dd>
+            <dd class="last">Write a now post</dd>							
+        </dl>
+    </div>
+    <div class="content-box">
+        <header>
+        <h3>Tables</h3>
+        </header>
+        <section>
+        Try other alternatives:<br/>
+        <dl>
+            <dt></dt>
+            <dd><a HREF="http://www.865171.cn">www.865171.cn</a></dd>
+        </dl>
+        </section>
+    </div>
+    </aside>
+    <!-- End of Right column/section -->
+</div>
