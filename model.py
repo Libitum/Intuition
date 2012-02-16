@@ -1,10 +1,11 @@
 # ^-^ coding: utf-8 ^-^
 import web
-import config
 import tools
+from config import CONFIG
 
-db = web.database(dbn=config.DB_TYPE, host=config.DB_HOST, port=config.DB_PORT, 
-        user=config.DB_USER, pw=config.DB_PASSWORD, db=config.DB_DATABASE)
+DB = CONFIG['DB']
+db = web.database(dbn=DB['TYPE'], host=DB['HOST'], port=DB['PORT'], 
+        user=DB['USER'], pw=DB['PASSWORD'], db=DB['DATABASE'])
 
 class Posts:
     __vars = {}
@@ -14,7 +15,8 @@ class Posts:
     def gets(self, order="id DESC", limit=11, offset=0):
         self.__vars['limit'] = limit
         self.__vars['offset'] = offset
-        query = "SELECT `id`, `post_title`, `post_date`, `post_status`, `post_views`, `comment_count`, `name` \
+        query = "SELECT `id`, `post_title`, `post_content`, `post_date`, `post_status`, \
+                `post_views`, `comment_count`, `name`, `slug`\
                 FROM in_posts \
                 LEFT JOIN in_terms ON `cat_id` = `term_id` \
                 ORDER BY id DESC LIMIT $limit OFFSET $offset;"

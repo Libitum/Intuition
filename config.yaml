@@ -1,0 +1,23 @@
+#Google Account
+ACCOUNT: libitum.zju@gmail.com
+
+#DB Server
+DB:
+    TYPE: mysql
+    HOST: r3139libitum.mysql.aliyun.com
+    PORT: 3306
+    USER: r8338libitum
+    PASSWORD: ra633728b
+    DATABASE: r8338libitum
+
+#Configuration for web.py
+CACHE: False
+DEBUG: True
+URL_MAPPING:
+    [
+        '/blog/(.+).html', 'Article', 
+        '/cat/(.+)',       'Category', 
+        '/tag/(.+)',       'Tag', 
+        '/(.+)',           'Page', 
+        '/',               'Index'
+    ]

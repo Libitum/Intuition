@@ -10,9 +10,9 @@ import json
 
 import web
 
-import config
-import model2
+import model
 import tools
+from config import CONFIG
 
 ### Url mappings
 urls = (
@@ -67,10 +67,10 @@ class Login:
                 URI = self.__discover(data.get("openid.identity"))
                 valid = urllib.urlopen(URI, data=urllib.urlencode(params)).read()
                 if(valid == "is_valid:true"):
-                    if data.get("openid.ext1.value.email") == config.ADMIN:
+                    if data.get("openid.ext1.value.email") == CONFIG['ADMIN']:
                         return "Login Successfully!"
                     else:
-                        return "Not this user! Please check the ADMIN in config.py"
+                        return "Not this user! Please check the ADMIN in config.yaml"
                 else:
                     return "Invalided Authentication!" + valid
             else:
@@ -113,8 +113,8 @@ class Logout:
 class Post:
     '''manage posts'''
     def GET(self, _id):
-        db_post = model2.Posts('post')
-        db_term = model2.Terms()
+        db_post = model.Posts('post')
+        db_term = model.Terms()
         if _id == "":
             #posts list
             page = web.input(page='1').page
@@ -166,7 +166,7 @@ class Post:
             raise web.notfound()
 
     def POST(self, _id):
-        db_post = model2.Posts('post')
+        db_post = model.Posts('post')
         if _id.isdigit():
             #update Post
             data = web.input()
@@ -195,14 +195,14 @@ class Page:
 class Term:
     '''manage categories and tags'''
     def GET(self, _type):
-        db_term = model2.Terms()
+        db_term = model.Terms()
         terms = db_term.gets()
         return render.terms(terms)
 
 class Comment:
     '''manage comments'''
     def GET(self):
-        db_comment =  model2.Comments()
+        db_comment =  model.Comments()
         comments = db_comment.gets()
         return render.comments(comments)
 

@@ -1,39 +1,25 @@
-<!--index.php-->
-<!--the loop-->
-<!--the loop-->
-<!--post class shows many html classes try them -->
-<div class="post-433 post type-post status-publish format-standard hentry category-tech" id="post-433">
-    <!--post title as a link-->
-    <h2><a href="http://libitum.tk/blog/433.html" title="Permalink to 常用编程语言的变量语义" rel="bookmark">常用编程语言的变量语义</a></h2>
-    <!--post time-->	
-    &nbsp;2011-11-22 | 类别[<a href="http://libitum.tk/cat/tech" title="View all posts in 巫术" rel="category tag">巫术</a>] | 118 views  
-    <!--post author-->
-    <div class="comments"><a href="http://libitum.tk/blog/433.html#respond" title="Comment on 常用编程语言的变量语义">0</a></div>
-    <div class="dates"><span>22</span><br>Nov</div>
-    <div class="split_line"></div>
-    <div class="detail">
-        <!--post text with the read more link-->
-        <p>变量语义，通常包括值语义和引用语义，表明编程语言中变量的实际值在不同变量之间传递方式。可能很多初学者都没有深入地去了解所使用的语言的变量语义问题，毕竟程序照样写，也不见得就会出错。不过真等到出现一些莫名其妙的错误时就要贻笑大方了。尤其需要了解下不同语言下的变量语义，千万不要想当然的以为大家都是一样的。这样既能避免一些很奇葩的错误，也能在一些情况下更加高效地使用内存。</p>
-        <p> <a href="http://libitum.tk/blog/433.html#more-433" class="more-link"> 阅读全文 </a></p>
+$def with (data, page)
+<!-- article starts -->
+<!-- article loop -->
+$for article in data:
+    <!-- post $article.id starts -->
+    <div class="post category-tech" id="post-$article.id">
+        <!--post title as a link-->
+        <h2><a href="/blog/$(article.id).html" title="Permalink to $article.post_title" rel="bookmark">$article.post_title</a></h2>
+        <!--post information-->
+        &nbsp;$time2str(article.post_date) | 类别[<a href="/cat/$(article.slug)" title="View all posts in $article.name" rel="category tag">$article.name</a>] | $article.post_views views  
+        <div class="comments"><a href="/blog/$(article.id).html#respond" title="Comment on $article.post_title">$article.comment_count</a></div>
+        <div class="dates"><span>$time2str(article.post_date, '%d')</span><br>$time2str(article.post_date, '%b')</div>
+        <div class="split_line"></div>
+        <div class="detail">
+            <!--post text -->
+            $:article.post_content
+            <p> <a href="http://libitum.tk/blog/433.html#more-433" class="more-link"> 阅读全文 </a></p>
+        </div>
     </div>
-    <!--for nextpage-->
-    <!--you need trackback rdf for pings from non wp blogs do not delete the html comments they are necessary-->
-    <!--<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description rdf:about="http://libitum.tk/blog/433.html"
-    dc:identifier="http://libitum.tk/blog/433.html"
-    dc:title="常用编程语言的变量语义"
-    trackback:ping="http://libitum.tk/blog/433.html/trackback" />
-    </rdf:RDF>-->
-
-</div> <!--end of one post-->
+    <!--end of post $article.id-->
+<!-- end of article loop -->
+<!-- end of articles -->
 
 <!--navigation-->
-<a href="http://libitum.tk/page/2" >&laquo; 更早的文章</a>				
-<!--do not delete-->
-<!--loop ends here-->
-
-
-
-<!--index.php end-->
+<a href="http://libitum.tk/page/2" >&laquo; 更早的文章</a>
