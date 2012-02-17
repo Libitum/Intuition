@@ -46,8 +46,9 @@ class Index(Articles):
         return db_post.gets()
 
 ### Functions used in templates
-def get_nav_list():
-    pass
+def get_cat_list():
+    db_term = model.Terms()
+    return db_term.getCatList()
 
 def get_special_list():
     pass

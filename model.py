@@ -58,6 +58,9 @@ class Posts:
         self.__vars['id'] = id
         return db.delete('in_posts', where='id=$id', vars=self.__vars)
 
+    def getPageList(self):
+        return db.select('in_posts', what="post_title" where='post_type=page')
+
 class Terms:
     def __init__(self):
         pass
@@ -76,6 +79,9 @@ class Terms:
     def getAllTags(self):
         query = "SELECT name, num FROM in_terms WHERE tag=1;"
         return db.query(query)
+
+    def getCatList(self):
+        return db.select('in_terms', what="name, slug", where="tag=0")
 
 class Comments:
     def gets(self, limit=10, offset = 0):
