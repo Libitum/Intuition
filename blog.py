@@ -50,8 +50,18 @@ def get_cat_list():
     db_term = model.Terms()
     return db_term.getCatList()
 
-def get_special_list():
+def get_page_list():
+    db_post = model.Posts()
+    return db_post.getPageList()
+
+def get_special_list(cat_id = None):
+    if cat_id == None:
+        #TODO 读取数据库里的配置
+        cat_id = 1
+
+    #db_post = model.Posts()
     pass
+    
 
 def get_new_list():
     pass

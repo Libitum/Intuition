@@ -59,7 +59,7 @@ class Posts:
         return db.delete('in_posts', where='id=$id', vars=self.__vars)
 
     def getPageList(self):
-        return db.select('in_posts', what="post_title" where='post_type=page')
+        return db.select('in_posts', what="post_title", where='post_type="page"')
 
 class Terms:
     def __init__(self):

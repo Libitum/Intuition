@@ -9,8 +9,8 @@ import time
 def getTime():
     return int(time.time())
 
-def str2time(s, format="%Y-%m-%d %H:%M"):
-    '''string format could be "%Y-%m-%d %H:%M"'''
+def str2time(s, format="%Y-%m-%d %H:%M:%S"):
+    '''string format could be "%Y-%m-%d %H:%M:%S"'''
     ts = time.strptime(s, format)
     return int(time.mktime(ts))
 
