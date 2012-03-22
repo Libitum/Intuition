@@ -2,7 +2,7 @@
 """
 Handle all operation from blog.
 @version: $Id$
-@author: Libitum<libitum@msn.com>
+@author: Libitum<libitum@about.me>
 """
 import web
 
@@ -43,7 +43,9 @@ class Articles:
 class Index(Articles):
     def get_data(self):
         db_post = model.Posts()
-        return db_post.gets()
+        #datas = db_post.gets()
+        #articles = []
+        return db_post.gets(where='cat_id!=2')
 
 ### Functions used in templates
 def get_cat_list():
@@ -54,20 +56,22 @@ def get_page_list():
     db_post = model.Posts()
     return db_post.getPageList()
 
-def get_special_list(cat_id = None):
+def get_special_list(cat_id = None, num=7):
     if cat_id == None:
         #TODO 读取数据库里的配置
-        cat_id = 1
+        cat_id = 2
 
-    #db_post = model.Posts()
-    pass
+    db_post = model.Posts()
+    return db_post.getSpecialList(cat_id, num)
     
 
-def get_new_list():
-    pass
+def get_new_list(cat_id=0, num=7):
+    db_post = model.Posts()
+    return db_post.getNewList(cat_id, num)
 
-def get_top_views_list():
-    pass
+def get_top_views_list(cat_id=0, num=7):
+    db_post = model.Posts()
+    return db_post.getTopViewsList(cat_id, num)
 
 def get_comment_list():
     pass

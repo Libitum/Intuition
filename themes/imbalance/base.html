@@ -28,13 +28,13 @@ $def with (content)
                 <div id="nav">
                     <ul>
                         <li class="link_item"><a href="http://libitum.tk/">Home</a></li>
-                        <li class="cat-item cat-item-1"><a href="http://libitum.tk/cat/jigu" title="View all posts filed under 叽咕">叽咕</a>
-                        </li>
-                        <li class="cat-item cat-item-5"><a href="http://libitum.tk/cat/tech" title="View all posts filed under 巫术">巫术</a>
-                        </li>
-                        <li class="cat-item cat-item-3"><a href="http://libitum.tk/cat/life" title="View all posts filed under 秋日">秋日</a>
-                        </li>
-                        <li class="page_item page-item-19"><a href="http://libitum.tk/about" title="立波吞">立波吞</a></li>
+                        $ cats = get_cat_list()
+                        $for cat in cats:
+                            <li class="cat-item"><a href="http://libitum.tk/cat/$cat.slug" title="View all posts filed under 叽咕">$cat.name</a>
+                            </li>
+                        $ pages = get_page_list()
+                        $for page in pages:
+                            <li class="page_item"><a href="http://libitum.tk/$page.post_slug" title="立波吞">$page.post_title</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,36 +46,31 @@ $def with (content)
                 <!-- content end -->
                 <div id="hole_bg"> </div>
 
-
                 <!--include sidebar-->
                 <!--sidebar.php-->
-                <!--widget start for Right Sidebar-->
                 <div id="sidebar">
                     <ul class="sidebar_ul">
                         <li id="text-3" class="widget widget_text"><h3 class="widgettitle">立波吞</h3><div class="widgettags"></div>			<div class="textwidget"><p>很随意的意思...<br />
                             就像随便吧，无所谓的~<br />
                             就像在借口曾经~</p>
                         </div>
-                        </li><li id="sideposts-4" class="widget widget_sideposts"><h3 class="widgettitle">叽咕</h3><div class="widgettags"></div><ul>
-                        <li class="spli-first"><span class="sideposts-title"><a href="http://libitum.tk/blog/429.html">英文字符串压缩</a></span></li>
-                        <li class="spli"><span class="sideposts-title"><a href="http://libitum.tk/blog/426.html">intern over, ready back~</a></span></li>
-                        <li class="spli"><span class="sideposts-title"><a href="http://libitum.tk/blog/417.html">我累了，就这样吧~</a></span></li>
-                        <li class="spli"><span class="sideposts-title"><a href="http://libitum.tk/blog/416.html">真应该那天就揍那小子一顿，气煞我也&#8230;</a></span></li>
-                        <li class="spli"><span class="sideposts-title"><a href="http://libitum.tk/blog/400.html">从5舍滚蛋一周年mark~</a></span></li>
-                        <li class="spli"><span class="sideposts-title"><a href="http://libitum.tk/blog/396.html">新版Libitum.org  欢迎围观！</a></span></li>
-                        <li class="spli-last"><span class="sideposts-title"><a href="http://libitum.tk/blog/390.html">又被发卡&#8230;唉真是值得悲伤的一天&#8230;</a></span></li>
+                        </li><li id="sideposts-4" class="widget widget_sideposts"><h3 class="widgettitle">叽咕</h3><div class="widgettags"></div>
+                    <ul>
+                    $ special_list = get_special_list()
+                    $for special in special_list:
+                        <li class="spli-first"><span class="sideposts-title"><a href="http://libitum.tk/blog/{$special.id}.html">$special.post_title</a></span></li>
                     </ul>
-                    </li>		<li id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widgettitle">借口</h3><div class="widgettags"></div>		<ul>
-                    <li><a href="http://libitum.tk/blog/433.html" title="常用编程语言的变量语义">常用编程语言的变量语义</a></li>
-                    <li><a href="http://libitum.tk/blog/413.html" title="c/c++中调用php之参数传递和数据交换">c/c++中调用php之参数传递和数据交换</a></li>
-                    <li><a href="http://libitum.tk/blog/404.html" title="c/c++中调用php之Embed SAPI">c/c++中调用php之Embed SAPI</a></li>
-                    <li><a href="http://libitum.tk/blog/397.html" title="当春天正在冬眠~">当春天正在冬眠~</a></li>
-                    <li><a href="http://libitum.tk/blog/393.html" title="RTC覆盖重装引起的jazz无法正常启动的错误">RTC覆盖重装引起的jazz无法正常启动的错误</a></li>
-                    <li><a href="http://libitum.tk/blog/387.html" title="wasce下JavaEE程序get参数中文乱码问题的解决~">wasce下JavaEE程序get参数中文乱码问题的解决~</a></li>
-                    <li><a href="http://libitum.tk/blog/380.html" title="今日之缘，明朝逝水&#8212;写在雷云之海之前~">今日之缘，明朝逝水&#8212;写在雷云之海之前~</a></li>
-                </ul>
+                    </li>		<li id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widgettitle">借口</h3><div class="widgettags"></div>
+                    <ul>
+                    $ new_list=get_new_list(2)
+                    $for new in new_list:
+                        <li><a href="http://libitum.tk/blog/{$new.id}.html" title="$new.post_title">$new.post_title</a></li>
+                    </ul>
                 </li><li id="views-3" class="widget widget_views"><h3 class="widgettitle">曾经</h3><div class="widgettags"></div><ul>
-                <li><a href="http://libitum.tk/blog/113.html"  title="java的swing中使...">java的swing中使...</a> - 2,829 views</li><li><a href="http://libitum.tk/blog/190.html"  title="java苹果风格皮肤se...">java苹果风格皮肤se...</a> - 2,449 views</li><li><a href="http://libitum.tk/blog/135.html"  title="在python、perl...">在python、perl...</a> - 2,288 views</li><li><a href="http://libitum.tk/blog/207.html"  title="openSUSE11.3...">openSUSE11.3...</a> - 2,232 views</li><li><a href="http://libitum.tk/blog/266.html"  title="打包的年华~">打包的年华~</a> - 2,216 views</li><li><a href="http://libitum.tk/blog/169.html"  title="使用Html5+css3...">使用Html5+css3...</a> - 1,769 views</li><li><a href="http://libitum.tk/blog/240.html"  title="intern over,...">intern over,...</a> - 1,716 views</li></ul>
+                $ top_views_list=get_top_views_list()
+                $for item in top_views_list:
+                    <li><a href="http://libitum.tk/blog/{$item.id}.html"  title="$item.post_title">$item.post_title[0:12]...</a> - $item.post_views views</li>
+                </ul>
             </li><li id="recentcomments" class="widget widget_recentcomments"><h3 class="widgettitle">叽哩咕噜</h3><div class="widgettags"></div><ul><li class="rc-navi rc-clearfix"><span class="rc-loading">Loading...</span></li><li id="rc-comment-temp" class="rc-item rc-comment rc-clearfix"><div class="rc-info"></div><div><div class="rc-excerpt"></div></div></li><li id="rc-ping-temp" class="rc-item rc-ping rc-clearfix"><span class="rc-label"></span></li></ul></li><li id="linkcat-4" class="widget widget_links"><h3 class="widgettitle">若非</h3><div class="widgettags"></div>
             <ul class='xoxo blogroll'>
                 <li><a href="http://www.bridgetchen.org/" target="_blank">Bridget</a></li>

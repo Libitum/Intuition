@@ -19,6 +19,9 @@ def time2str(t, format="%Y-%m-%d %H:%M"):
     ts = time.localtime(t)
     return time.strftime(format, ts)
 
+def get_abstract(article):
+    return article.split('<!--more-->', 1)[0]
+
 if __name__ == "__main__":
     t = getTime()
     s = time2str(t)

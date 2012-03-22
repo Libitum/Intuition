@@ -14,7 +14,7 @@ $for article in data:
         <div class="detail">
             <!--post text -->
             <p>
-            $:article.post_content
+            $:get_abstract(article.post_content)
             </p>
             <p> <a href="http://libitum.tk/blog/433.html#more-433" class="more-link"> 阅读全文 </a></p>
         </div>

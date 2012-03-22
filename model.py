@@ -12,14 +12,15 @@ class Posts:
     def __init__(self, tp = 'post'):
         self.__vars['type'] = tp
 
-    def gets(self, order="id DESC", limit=11, offset=0):
+    def gets(self, order="id DESC", limit=10, offset=0, where=None):
         self.__vars['limit'] = limit
         self.__vars['offset'] = offset
+        where = 'where ' + where if where is not None else ''
         query = "SELECT `id`, `post_title`, `post_content`, `post_date`, `post_status`, \
                 `post_views`, `comment_count`, `name`, `slug`\
                 FROM in_posts \
-                LEFT JOIN in_terms ON `cat_id` = `term_id` \
-                ORDER BY id DESC LIMIT $limit OFFSET $offset;"
+                LEFT JOIN in_terms ON `cat_id` = `term_id` %s\
+                ORDER BY id DESC LIMIT $limit OFFSET $offset;" % where
         return db.query(query, vars=self.__vars)
 
     def get(self, id):
@@ -59,7 +60,19 @@ class Posts:
         return db.delete('in_posts', where='id=$id', vars=self.__vars)
 
     def getPageList(self):
-        return db.select('in_posts', what="post_title", where='post_type="page"')
+        return db.select('in_posts', what="post_title, post_slug", where='post_type="page"')
+    
+    def getNewList(self, cat_id=0, num=7):
+        return db.select('in_posts', what="id, post_title", where='cat_id!=%d' % cat_id,
+                limit=num, order="post_date DESC")
+
+    def getSpecialList(self, cat_id, num=7):
+        return db.select('in_posts', what="id, post_title", where="cat_id=%d" % cat_id, 
+                limit=num, order="post_date DESC" )
+
+    def getTopViewsList(self, cat_id, num=7):
+        return db.select('in_posts', what="id, post_title, post_views", where="cat_id!=%d" % cat_id, 
+                limit=num, order="post_views DESC" )
 
 class Terms:
     def __init__(self):
