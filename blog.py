@@ -21,10 +21,11 @@ render = web.template.render('themes/imbalance', base="base", globals=locals())
 ### Parent handler
 class Article:
     '''Parent class for article'''
-    _data = {}
-    _comments = {}
-    def GET(self):
-        return render.article(self._data, self._comments)
+    def GET(self, id):
+        db_post = model.Posts()
+        article = db_post.get(id)[0]
+        comments = {}
+        return render.article(article, comments)
 
 class Articles:
     '''Parent class for articles'''
