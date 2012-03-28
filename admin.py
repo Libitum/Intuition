@@ -32,7 +32,7 @@ admin = web.application(urls, locals())
 ### Session initialization
 '''
 if web.config.get('_session') is None:
-    session = web.session.Session(admin, web.session.DiskStore('sessions'))
+    session = web.session.Session(admin, web.session.DiskStore(os.path.join('sessions')))
     web.config._session = session
 else:
     session = web.config._session

@@ -5,9 +5,6 @@ $def with (content)
         <meta charset="UTF-8" />
         <title> 立波吞.偷窥</title>
         <link rel="stylesheet" href="/static/imbalance/style.css" type="text/css" media="screen" />
-        <!--
-        <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://libitum.tk/wp-includes/wlwmanifest.xml" /> 
-        -->
         <script type="text/javascript">
             window.onload=function(){
                 var left_height = document.getElementById("content").clientHeight -50;
@@ -27,21 +24,21 @@ $def with (content)
                 </div>
                 <div id="nav">
                     <ul>
-                        <li class="link_item"><a href="http://libitum.tk/">Home</a></li>
-                        $ cats = get_cat_list()
-                        $for cat in cats:
-                            <li class="cat-item"><a href="http://libitum.tk/cat/$cat.slug" title="View all posts filed under 叽咕">$cat.name</a>
-                            </li>
-                        $ pages = get_page_list()
-                        $for page in pages:
-                            <li class="page_item"><a href="http://libitum.tk/$page.post_slug" title="立波吞">$page.post_title</a></li>
+                        <li class="link_item"><a href="$get_home_url()">Home</a></li>
+                    $ cats = get_cat_list()
+                    $for cat in cats:
+                        <li class="cat-item"><a href="$get_cat_url(cat.slug)" title="View all posts filed under 叽咕">$cat.name</a>
+                        </li>
+                    $ pages = get_page_list()
+                    $for page in pages:
+                        <li class="page_item"><a href="$get_page_url(page.post_slug)" title="立波吞">$page.post_title</a></li>
                     </ul>
                 </div>
             </div>
             <div id="main">
                 <!-- content start -->
                 <div id="content">
-                $:content
+                    $:content
                 </div>
                 <!-- content end -->
                 <div id="hole_bg"> </div>
@@ -55,73 +52,51 @@ $def with (content)
                             就像在借口曾经~</p>
                         </div>
                         </li><li id="sideposts-4" class="widget widget_sideposts"><h3 class="widgettitle">叽咕</h3><div class="widgettags"></div>
-                    <ul>
-                    $ special_list = get_special_list()
-                    $for special in special_list:
-                        <li class="spli-first"><span class="sideposts-title"><a href="http://libitum.tk/blog/{$special.id}.html">$special.post_title</a></span></li>
+                        <ul>
+                        $ special_list = get_special_list()
+                        $for special in special_list:
+                            <li class="spli-first"><span class="sideposts-title"><a href="$get_blog_url(special.id)">$special.post_title</a></span></li>
+                        </ul>
+                        </li>		<li id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widgettitle">借口</h3><div class="widgettags"></div>
+                        <ul>
+                        $ new_list=get_new_list(2)
+                        $for new in new_list:
+                            <li><a href="$get_blog_url(new.id)" title="$new.post_title">$new.post_title</a></li>
+                        </ul>
+                        </li><li id="views-3" class="widget widget_views"><h3 class="widgettitle">曾经</h3><div class="widgettags"></div><ul>
+                    $ top_views_list=get_top_views_list()
+                    $for item in top_views_list:
+                        <li><a href="$get_blog_url(item.id)"  title="$item.post_title">$item.post_title[0:12]...</a> - $item.post_views views</li>
                     </ul>
-                    </li>		<li id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widgettitle">借口</h3><div class="widgettags"></div>
-                    <ul>
-                    $ new_list=get_new_list(2)
-                    $for new in new_list:
-                        <li><a href="http://libitum.tk/blog/{$new.id}.html" title="$new.post_title">$new.post_title</a></li>
+                    </li><li id="recentcomments" class="widget widget_recentcomments"><h3 class="widgettitle">叽哩咕噜</h3><div class="widgettags"></div><ul><li class="rc-navi rc-clearfix"><span class="rc-loading">Loading...</span></li><li id="rc-comment-temp" class="rc-item rc-comment rc-clearfix"><div class="rc-info"></div><div><div class="rc-excerpt"></div></div></li><li id="rc-ping-temp" class="rc-item rc-ping rc-clearfix"><span class="rc-label"></span></li></ul></li><li id="linkcat-4" class="widget widget_links"><h3 class="widgettitle">若非</h3><div class="widgettags"></div>
+                    <ul class='xoxo blogroll'>
+                        <li><a href="http://www.bridgetchen.org/" target="_blank">Bridget</a></li>
+                        <li><a href="http://www.bwithu.org/" title="To be bg you~" target="_blank">Bubu.</a></li>
+                        <li><a href="http://pissang.net/wordpress/" target="_blank">Lang</a></li>
+                        <li><a href="http://www.libitum.org/" rel="me" title="My Homepage~" target="_blank">Libitum.org</a></li>
+                        <li><a href="http://rosejay.org/" target="_blank">rosejay</a></li>
+                        <li><a href="http://www.tisafu.com/" rel="friend" target="_blank">Tisa</a></li>
+                        <li><a href="http://sunflowerzwx.blog.163.com/" target="_blank">思麦儿</a></li>
+                        <li><a href="http://www.qsc.zju.edu.cn/" target="_blank">求是潮</a></li>
+
                     </ul>
-                </li><li id="views-3" class="widget widget_views"><h3 class="widgettitle">曾经</h3><div class="widgettags"></div><ul>
-                $ top_views_list=get_top_views_list()
-                $for item in top_views_list:
-                    <li><a href="http://libitum.tk/blog/{$item.id}.html"  title="$item.post_title">$item.post_title[0:12]...</a> - $item.post_views views</li>
+                    </li>
+                    
+                    <!--sidebar.php end-->
                 </ul>
-            </li><li id="recentcomments" class="widget widget_recentcomments"><h3 class="widgettitle">叽哩咕噜</h3><div class="widgettags"></div><ul><li class="rc-navi rc-clearfix"><span class="rc-loading">Loading...</span></li><li id="rc-comment-temp" class="rc-item rc-comment rc-clearfix"><div class="rc-info"></div><div><div class="rc-excerpt"></div></div></li><li id="rc-ping-temp" class="rc-item rc-ping rc-clearfix"><span class="rc-label"></span></li></ul></li><li id="linkcat-4" class="widget widget_links"><h3 class="widgettitle">若非</h3><div class="widgettags"></div>
-            <ul class='xoxo blogroll'>
-                <li><a href="http://www.bridgetchen.org/" target="_blank">Bridget</a></li>
-                <li><a href="http://www.bwithu.org/" title="To be bg you~" target="_blank">Bubu.</a></li>
-                <li><a href="http://pissang.net/wordpress/" target="_blank">Lang</a></li>
-                <li><a href="http://www.libitum.org/" rel="me" title="My Homepage~" target="_blank">Libitum.org</a></li>
-                <li><a href="http://rosejay.org/" target="_blank">rosejay</a></li>
-                <li><a href="http://www.tisafu.com/" rel="friend" target="_blank">Tisa</a></li>
-                <li><a href="http://sunflowerzwx.blog.163.com/" target="_blank">思麦儿</a></li>
-                <li><a href="http://www.qsc.zju.edu.cn/" target="_blank">求是潮</a></li>
+            </div>
+            <!--main end-->
 
-            </ul>
-            </li>
-            
-            <!--sidebar.php end-->
-        </ul>
-    </div>
-    <!--main end-->
-
-</div>
-<!--include footer-->
-<!--footer.php-->
-<div id="footer">
-    Copyright &copy; 2009-2011 		<a href="http://www.libitum.org/">Libitum</a> hello@libitum.org &nbsp;Some Rights Reservied
-    <br/>
-    Powered By <a href="http://wordpress.org/" target="_blank">WordPress 3.2.1</a> Theme <a href="http://www.tisafu.com/">imbalance</a> Designed By <a href="http://www.tisafu.com/">Tisa</a>
-    <div style="float:right">
+        </div>
+        <!--include footer-->
+        <!--footer.php-->
+        <div id="footer">
+            Copyright &copy; 2009-2011 		<a href="http://www.libitum.org/">Libitum</a> hello@libitum.org &nbsp;Some Rights Reservied
+            <br/>
+            Powered By <a href="http://wordpress.org/" target="_blank">WordPress 3.2.1</a> Theme <a href="http://www.tisafu.com/">imbalance</a> Designed By <a href="http://www.tisafu.com/">Tisa</a>
+            <div style="float:right">
         <script language="javascript" type="text/javascript" src="http://js.users.51.la/3422197.js"></script><noscript><a href="http://www.51.la/?3422197" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/3422197.asp" style="border:none" /></a></noscript>
     </div>
-
-
-    <!--necessary for plugins do not delete-->
-    <script type='text/javascript' src='http://libitum.tk/wp-content/plugins/wp-recentcomments/js/wp-recentcomments.js?ver=2.0.6'></script>
-    <script type="text/javascript">
-        //<![CDATA[
-    var rcGlobal = {
-        serverUrl		:'http://libitum.tk',
-            infoTemp		:'%REVIEWER% on %POST%',
-            loadingText		:'Loading',
-            noCommentsText	:'No comments',
-            newestText		:'&laquo; Newest',
-            newerText		:'&laquo; Newer',
-            olderText		:'Older &raquo;',
-            showContent		:'',
-            external		:'',
-            avatarSize		:'32',
-            avatarPosition	:'left',
-            anonymous		:'Anonymous',
-            initJson		:{items:[{"ellipsis":"1","avatarImage":"http://1.gravatar.com/avatar/39cddf8d59ceb32485283cc221715dc4?s=32&d=identicon&r=G","postTitle":"intern over, ready back~","postUrl":"http://libitum.tk/blog/426.html","reviewerName":"张小虾","reviewerUrl":"","excerpt":"哦，感觉所有人都越长越","id":"679","type":""},{"ellipsis":"1","avatarImage":"http://1.gravatar.com/avatar/39cddf8d59ceb32485283cc221715dc4?s=32&d=identicon&r=G","postTitle":"以今之名~","postUrl":"http://libitum.tk/blog/28.html","reviewerName":"张小虾","reviewerUrl":"","excerpt":"呼啦啦的就2011年末","id":"678","type":""},{"ellipsis":"1","avatarImage":"http://0.gravatar.com/avatar/e655edd3ece6896fa94dfe7fc73c4e1b?s=32&d=identicon&r=G","postTitle":"java苹果风格皮肤seaglass的中文乱码处理","postUrl":"http://libitum.tk/blog/190.html","reviewerName":"小明","reviewerUrl":"","excerpt":"谢谢楼主的解答 之前是","id":"669","type":""},{"ellipsis":"1","avatarImage":"http://0.gravatar.com/avatar/40a6607989f3cd3b05a775bb3c4670af?s=32&d=identicon&r=G","postTitle":"java苹果风格皮肤seaglass的中文乱码处理","postUrl":"http://libitum.tk/blog/190.html","reviewerName":"Libitum","reviewerUrl":"","excerpt":"sun/swing/p","id":"668","type":""},{"ellipsis":"1","avatarImage":"http://0.gravatar.com/avatar/e655edd3ece6896fa94dfe7fc73c4e1b?s=32&d=identicon&r=G","postTitle":"java苹果风格皮肤seaglass的中文乱码处理","postUrl":"http://libitum.tk/blog/190.html","reviewerName":"小明","reviewerUrl":"","excerpt":"楼主你好 小弟在写一个","id":"665","type":""}],navi:{more:"1",page:"1"}}};
-            //]]>
-            </script>
         </div>
 
     </div>

@@ -18,35 +18,45 @@ blog = web.application(CONFIG['URL_MAPPING'], locals())
 ### Templates initialization
 render = web.template.render('themes/imbalance', base="base", globals=locals())
 
-### Parent handler
+### Main handler
 class Article:
     '''Parent class for article'''
+    def get_article(self, id):
+        db_post = model.Posts()
+        return db_post.get(id)[0]
+
+    def get_comments(self, post_id):
+        db_comment = model.Comments()
+        return db_comment.gets(post_id)
+    
     def GET(self, id):
-        db_post = model.Posts()
-        article = db_post.get(id)[0]
-        comments = {}
-        return render.article(article, comments)
+        if id == 'favicon.ico':
+            return None
+        db_comment = model.Comments()
 
-class Articles:
-    '''Parent class for articles'''
-    def get_data(self):
-        pass
+        article = self.get_article(id)
+        comments = self.get_comments(article.id)
+        num = len(comments)
+        print comments
+        return render.article(article, comments, num)
 
-    def get_page(self):
-        pass
-
+class Index:
     def GET(self):
-        __data = self.get_data()
-        __page = self.get_page()
-        return render.articles(__data, __page)
-
-### Main handler
-class Index(Articles):
-    def get_data(self):
         db_post = model.Posts()
-        #datas = db_post.gets()
-        #articles = []
-        return db_post.gets(where='cat_id!=2')
+        posts = db_post.gets(where='cat_id!=2')
+        return render.articles(posts, None)
+
+class Category:
+    def GET(self, slug):
+        db_post = model.Posts()
+        db_terms = model.Terms()
+
+        term_id = db_terms.getTermId(slug)[0].term_id
+        posts = db_post.gets(where='term_id=%s' % term_id)
+        return render.articles(posts, None)
+
+class Page(Article):
+    pass
 
 ### Functions used in templates
 def get_cat_list():

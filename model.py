@@ -25,7 +25,7 @@ class Posts:
 
     def get(self, id):
         self.__vars['id'] = id
-        return db.select('in_posts', where="id=$id", vars=self.__vars)
+        return db.select('in_posts', where="id=$id or post_slug=$id", limit=1, vars=self.__vars)
 
     def update(self, id, data):
         self.__vars['id'] = id
@@ -96,11 +96,16 @@ class Terms:
     def getCatList(self):
         return db.select('in_terms', what="name, slug", where="tag=0")
 
+    def getTermId(self, slug):
+        return db.select('in_terms', what='term_id', where="slug=$slug", limit=1, vars={'slug':slug})
+
 class Comments:
-    def gets(self, limit=10, offset = 0):
+    def get_all(self, limit=10, offset = 0):
         query = "SELECT comment_author, comment_author_email, comment_author_url, \
                 comment_author_IP, comment_date, comment_content, post_title \
                 FROM in_comments \
                 LEFT JOIN in_posts ON comment_post_id=id ;"
         return db.query(query)
 
+    def gets(self, post_id):
+        return db.select('in_comments', where="comment_post_id=%s" % post_id)
