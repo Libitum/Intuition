@@ -24,9 +24,9 @@ def time2str(t, format="%Y-%m-%d %H:%M"):
 def get_abstract(article):
     return article.split('<!--more-->', 1)[0]
 
-def get_gravatar(email):
+def get_gravatar(email, size=48):
     m = hashlib.new('md5', email).hexdigest()
-    return "http://0.gravatar.com/avatar/%s?s=48&d=identicon&r=G" % m
+    return "http://0.gravatar.com/avatar/%s?s=%s&d=identicon&r=G" % (m, size)
 
 def __get_url(tp, char):
     url = None

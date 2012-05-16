@@ -8,8 +8,12 @@ The main entrance of Intuition, mapping urls to different Controlor
 import os, sys
 import web
 
-abspath = os.path.dirname(__file__)
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+abspath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(abspath)
+os.chdir(abspath)
 import admin
 import blog
 

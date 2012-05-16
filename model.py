@@ -109,3 +109,10 @@ class Comments:
 
     def gets(self, post_id):
         return db.select('in_comments', where="comment_post_id=%s" % post_id)
+
+    def getRecentCommentsList(self, num):
+        return db.select('in_comments', what="comment_id, comment_post_id, comment_author, comment_author_email, comment_content",
+                limit=num, order="comment_date DESC" )
+
+    def insert(self, post_id, author, email, url, ip, comment):
+        return db.insert('in_comments', comment_post_id=post_id, comment_author=author, comment_author_email=email, comment_author_url=url, comment_author_IP=ip, comment_date=tools.getTime(), comment_content=comment)

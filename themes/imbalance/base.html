@@ -24,7 +24,7 @@ $def with (content)
                 </div>
                 <div id="nav">
                     <ul>
-                        <li class="link_item"><a href="$get_home_url()">Home</a></li>
+                        <li class="link_item"><a href="/">Home</a></li>
                     $ cats = get_cat_list()
                     $for cat in cats:
                         <li class="cat-item"><a href="$get_cat_url(cat.slug)" title="View all posts filed under 叽咕">$cat.name</a>
@@ -68,7 +68,14 @@ $def with (content)
                     $for item in top_views_list:
                         <li><a href="$get_blog_url(item.id)"  title="$item.post_title">$item.post_title[0:12]...</a> - $item.post_views views</li>
                     </ul>
-                    </li><li id="recentcomments" class="widget widget_recentcomments"><h3 class="widgettitle">叽哩咕噜</h3><div class="widgettags"></div><ul><li class="rc-navi rc-clearfix"><span class="rc-loading">Loading...</span></li><li id="rc-comment-temp" class="rc-item rc-comment rc-clearfix"><div class="rc-info"></div><div><div class="rc-excerpt"></div></div></li><li id="rc-ping-temp" class="rc-item rc-ping rc-clearfix"><span class="rc-label"></span></li></ul></li><li id="linkcat-4" class="widget widget_links"><h3 class="widgettitle">若非</h3><div class="widgettags"></div>
+                    </li>
+                    <li id="recentcomments" class="widget widget_recentcomments"><h3 class="widgettitle">叽哩咕噜</h3><div class="widgettags"></div>
+                    <ul>
+                    $ recent_comments_list=get_recent_comments_list()
+                    $for comment in recent_comments_list:
+                        <li class="rc-item"><img src="$get_gravatar(comment.comment_author_email, 32)"/><div class="rc-info"><strong>$comment.comment_author</strong></div><div class="rc-excerpt">$comment.comment_content[0:10]...</div></li>
+                    </ul>
+                    </li><li id="linkcat-4" class="widget widget_links"><h3 class="widgettitle">若非</h3><div class="widgettags"></div>
                     <ul class='xoxo blogroll'>
                         <li><a href="http://www.bridgetchen.org/" target="_blank">Bridget</a></li>
                         <li><a href="http://www.bwithu.org/" title="To be bg you~" target="_blank">Bubu.</a></li>
@@ -81,7 +88,6 @@ $def with (content)
 
                     </ul>
                     </li>
-                    
                     <!--sidebar.php end-->
                 </ul>
             </div>

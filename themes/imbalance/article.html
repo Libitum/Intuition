@@ -1,4 +1,4 @@
-$def with (article, comments, num)
+$def with (article, comments, num, user)
 <div class="post" id="post-$article.id">
     <!--post title-->
     <h2><a href="/blog/$(article.id).html" rel="bookmark" title="Permanent Link: $article.post_title">$article.post_title</a></h2>
@@ -55,24 +55,21 @@ $for comment in comments:
     </div>
 
 
-    <form action="http://libitum.tk/wp-comments-post.php" method="post" id="commentform">
+    <form method="post" action="#respond" id="commentform">
 
         <div id="respond_l">
-            <p><input type="text" name="author" id="author" value="" tabindex="1" aria-required="true"></p>
+            <p><input type="text" name="author" id="author" value="$user.author" tabindex="1" aria-required="true"></p>
 
-            <p><input type="text" name="email" id="email" value="" tabindex="2" aria-required="true"></p>
+            <p><input type="text" name="email" id="email" value="$user.email" tabindex="2" aria-required="true"></p>
 
-            <p><input type="text" name="url" id="url" value="" tabindex="3"></p>
+            <p><input type="text" name="url" id="url" value="$user.url" tabindex="3"></p>
         </div>
 
         <div id="respond_r"><textarea name="comment" id="comment" cols="100%" rows="100%" tabindex="4"></textarea></div>
 
         <div id="respond_btn"><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment">
-            <input type="hidden" name="comment_post_ID" value="207" id="comment_post_ID">
             <input type="hidden" name="comment_parent" id="comment_parent" value="0">
         </div>
-        <p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b5d191a0c0"></p><!--this is a hook for some plugins do not delete-->
-
     </form>
 
 </div><!--end of id respond-->

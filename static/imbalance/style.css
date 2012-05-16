@@ -84,5 +84,8 @@ li.widget_recentcomments ul li{list-style:none outside none}
 
 .widget_links .widgettags{background:url("images/link_logo.gif") no-repeat}
 
+li.rc-item img{float:left; margin-right: 8px; background: white; padding: 1px; border: 1px solid #999;}
+
+
 /*----post class---*/
 .post, .hentry{padding-bottom:30px; position:relative}

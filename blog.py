@@ -37,8 +37,23 @@ class Article:
         article = self.get_article(id)
         comments = self.get_comments(article.id)
         num = len(comments)
-        print comments
-        return render.article(article, comments, num)
+
+        user = web.cookies(author='', email='', url='')
+        return render.article(article, comments, num, user)
+
+    def POST(self, id):
+        data = web.input()
+        if(data.author == '' or data.email == '' or data.comment == ''):
+            return 'author or email required.'
+
+        web.setcookie('author', data.author)
+        web.setcookie('email', data.email)
+        web.setcookie('url', data.url)
+        
+        db_comment = model.Comments()
+        db_comment.insert(id, data.author, data.email, data.url, web.ctx.ip, data.comment)
+
+        return self.GET(id)
 
 class Index:
     def GET(self):
@@ -84,8 +99,9 @@ def get_top_views_list(cat_id=0, num=7):
     db_post = model.Posts()
     return db_post.getTopViewsList(cat_id, num)
 
-def get_comment_list():
-    pass
+def get_recent_comments_list(num=5):
+    db_comment = model.Comments()
+    return db_comment.getRecentCommentsList(num)
 
 def get_link_list():
     pass
