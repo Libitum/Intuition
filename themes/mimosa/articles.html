@@ -1,0 +1,26 @@
+$def with (data, page)
+<!-- article starts -->
+<!-- article loop -->
+$for article in data:
+    <!-- post $article.id starts -->
+    <div class="post category-tech" id="post-$article.id">
+        <!--post title as a link-->
+        <h2><a href="/blog/$(article.id).html" title="Permalink to $article.post_title" rel="bookmark">$article.post_title</a></h2>
+        <!--post information-->
+        &nbsp;$time2str(article.post_date) | 类别[<a href="/cat/$(article.slug)" title="View all posts in $article.name" rel="category tag">$article.name</a>] | $article.post_views views  
+        <div class="comments"><a href="/blog/$(article.id).html#respond" title="Comment on $article.post_title">$article.comment_count</a></div>
+        <div class="split_line"></div>
+        <div class="detail">
+            <!--post text -->
+            <p>
+            $:get_abstract(article.post_content)
+            </p>
+            <p> <a href="http://libitum.tk/blog/433.html#more-433" class="more-link"> 阅读全文 </a></p>
+        </div>
+    </div>
+    <!--end of post $article.id-->
+<!-- end of article loop -->
+<!-- end of articles -->
+
+<!--navigation-->
+<a href="http://libitum.tk/page/2" >&laquo; 更早的文章</a>
