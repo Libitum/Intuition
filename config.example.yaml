@@ -1,14 +1,14 @@
 #Google Account
-ACCOUNT: libitum.zju@gmail.com
+ACCOUNT: yougoogleaccount@gmail.com
 
 #DB Server
 DB:
     TYPE: mysql
-    HOST: r3139libitum.mysql.aliyun.com
+    HOST: localhost
     PORT: 3306
-    USER: r8338libitum
-    PASSWORD: ra633728b
-    DATABASE: r8338libitum
+    USER: user
+    PASSWORD: password
+    DATABASE: database
 
 #Configuration for web.py
 CACHE: False
