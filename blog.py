@@ -66,7 +66,7 @@ class Category:
         db_post = model.Posts()
         db_terms = model.Terms()
 
-        term_id = db_terms.getTermId(slug)[0].term_id
+        term_id = db_terms.get_term_id(slug)[0].term_id
         posts = db_post.gets(where='term_id=%s' % term_id)
         return render.articles(posts, None)
 
@@ -76,11 +76,11 @@ class Page(Article):
 ### Functions used in templates
 def get_cat_list():
     db_term = model.Terms()
-    return db_term.getCatList()
+    return db_term.get_cat_list()
 
 def get_page_list():
     db_post = model.Posts()
-    return db_post.getPageList()
+    return db_post.get_page_list()
 
 def get_special_list(cat_id = None, num=7):
     if cat_id == None:
@@ -88,20 +88,20 @@ def get_special_list(cat_id = None, num=7):
         cat_id = 2
 
     db_post = model.Posts()
-    return db_post.getSpecialList(cat_id, num)
+    return db_post.get_special_list(cat_id, num)
     
 
 def get_new_list(cat_id=0, num=7):
     db_post = model.Posts()
-    return db_post.getNewList(cat_id, num)
+    return db_post.get_new_list(cat_id, num)
 
 def get_top_views_list(cat_id=0, num=7):
     db_post = model.Posts()
-    return db_post.getTopViewsList(cat_id, num)
+    return db_post.get_top_views_list(cat_id, num)
 
 def get_recent_comments_list(num=5):
     db_comment = model.Comments()
-    return db_comment.getRecentCommentsList(num)
+    return db_comment.get_recent_comments_list(num)
 
 def get_link_list():
     pass

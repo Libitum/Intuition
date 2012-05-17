@@ -59,18 +59,18 @@ class Posts:
         self.__vars['id'] = id
         return db.delete('in_posts', where='id=$id', vars=self.__vars)
 
-    def getPageList(self):
+    def get_page_list(self):
         return db.select('in_posts', what="post_title, post_slug", where='post_type="page"')
     
-    def getNewList(self, cat_id=0, num=7):
+    def get_new_list(self, cat_id=0, num=7):
         return db.select('in_posts', what="id, post_title", where='cat_id!=%d' % cat_id,
                 limit=num, order="post_date DESC")
 
-    def getSpecialList(self, cat_id, num=7):
+    def get_special_list(self, cat_id, num=7):
         return db.select('in_posts', what="id, post_title", where="cat_id=%d" % cat_id, 
                 limit=num, order="post_date DESC" )
 
-    def getTopViewsList(self, cat_id, num=7):
+    def get_top_views_list(self, cat_id, num=7):
         return db.select('in_posts', what="id, post_title, post_views", where="cat_id!=%d" % cat_id, 
                 limit=num, order="post_views DESC" )
 
@@ -81,22 +81,22 @@ class Terms:
     def gets(self, tag=0):
         return db.select('in_terms', where="tag=$tag", vars={'tag' : tag})
 
-    def getTags(self, id):
+    def get_tags(self, id):
         query = "SELECT name FROM in_terms, in_term_post WHERE in_term_post.post_id = $id \
                 AND in_term_post.term_id = in_terms.term_id;"
         return db.query(query, {'id' : id})
 
-    def getSuggestTags(self):
+    def get_suggest_tags(self):
         return db.select('in_terms', what="name", where="tag=1", order="num DESC")
 
-    def getAllTags(self):
+    def get_all_tags(self):
         query = "SELECT name, num FROM in_terms WHERE tag=1;"
         return db.query(query)
 
-    def getCatList(self):
+    def get_cat_list(self):
         return db.select('in_terms', what="name, slug", where="tag=0")
 
-    def getTermId(self, slug):
+    def get_term_id(self, slug):
         return db.select('in_terms', what='term_id', where="slug=$slug", limit=1, vars={'slug':slug})
 
 class Comments:
@@ -110,9 +110,10 @@ class Comments:
     def gets(self, post_id):
         return db.select('in_comments', where="comment_post_id=%s" % post_id)
 
-    def getRecentCommentsList(self, num):
+    def get_recent_comments_list(self, num):
         return db.select('in_comments', what="comment_id, comment_post_id, comment_author, comment_author_email, comment_content",
                 limit=num, order="comment_date DESC" )
 
     def insert(self, post_id, author, email, url, ip, comment):
-        return db.insert('in_comments', comment_post_id=post_id, comment_author=author, comment_author_email=email, comment_author_url=url, comment_author_IP=ip, comment_date=tools.getTime(), comment_content=comment)
+        return db.insert('in_comments', comment_post_id=post_id, comment_author=author, comment_author_email=email, comment_author_url=url, 
+                comment_author_IP=ip, comment_date=tools.get_time(), comment_content=comment)

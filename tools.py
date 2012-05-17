@@ -8,7 +8,7 @@ import time
 import hashlib
 from config import CONFIG
 
-def getTime():
+def get_time():
     return int(time.time())
 
 def str2time(s, format="%Y-%m-%d %H:%M:%S"):
@@ -51,7 +51,7 @@ def get_page_url(char):
 
 if __name__ == "__main__":
     '''
-    t = getTime()
+    t = get_time()
     s = time2str(t)
     print t
     print s

@@ -130,8 +130,8 @@ class Post:
             #Edit Post
             post = db_post.get(_id)[0]
             cats = db_term.gets(0)
-            post_tags = db_term.getTags(post.id)
-            suggest_tags = db_term.getSuggestTags()
+            post_tags = db_term.get_tags(post.id)
+            suggest_tags = db_term.get_suggest_tags()
             return render.post(post, cats, post_tags, suggest_tags)
 
         elif _id == "new":
@@ -141,21 +141,21 @@ class Post:
                     'cat_id' : 0,
                     'post_title' : '',
                     'post_content' : '',
-                    'post_date' : tools.getTime(),
+                    'post_date' : tools.get_time(),
                     'cat_id' : 1,
                     'post_slug' : '',
                     'post_status' : 0,
                     }
             cats = db_term.gets(0)
             post_tags = ''
-            suggest_tags = db_term.getSuggestTags()
+            suggest_tags = db_term.get_suggest_tags()
             return render.post(post, cats, post_tags, suggest_tags)
 
         elif _id == "tags.json":
             #tags in json
             #tags = [{'tag' : 'tisa', 'freq':30}, {'tag':'libitum', 'freq':30}]
             tags = []
-            tags_res = db_term.getAllTags()
+            tags_res = db_term.get_all_tags()
             for tag_res in tags_res:
                 tag = {'tag' : tag_res['name'], 'freq' : tag_res['num']}
                 tags.append(tag)
